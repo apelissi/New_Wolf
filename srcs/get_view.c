@@ -35,6 +35,8 @@ int		ft_color(int num, int p)
 		return (CYAN - p);
 	else if (num == -1)
 		return (BLACK + p + p * 256);
+	else if (num == 10)
+		return (PINK);
 	return (G3 + p);
 }
 
@@ -91,7 +93,7 @@ void	get_view(t_env *e)
 		d = (float)e->pe->angle - 30 + (float)i * 60 / (float)e->win_x;
 		d = (d < 0) ? 360 + d : d;
 		d = (d >= 360) ? d - 360 : d;
-		if (1)
+		if (d)
 			raycast2(d, e->pe, e->map, &c);
 		else
 			raycast(d, e->pe, e->map, &c);

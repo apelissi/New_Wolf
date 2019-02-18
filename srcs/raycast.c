@@ -113,6 +113,162 @@ float	findxm(float d, t_perso *p, t_map *m)
 	return (hypotf((float)(p->pos_x) - xm, (float)(p->pos_y) - ym));
 }
 
+float	jack0(float d, t_perso *p, t_map *m)
+{
+	float	xm;
+	float	ym;
+	float	coef;
+	float	xa;
+	float	ya;
+	float	dx;
+	float	dy;
+	float	a;
+	float	am;
+	float	bm;
+
+	coef = cosf(d / 180 * PI) / sinf(d / 180 * PI);
+	xm = (int)(p->pos_x / TS + 1) * TS;
+	ym = coef * xm + p->pos_y - coef * p->pos_x;
+	a = 90 - d;
+	ya = TS * tanf(a / 180 * PI);
+	while (!is_wall(xm, ym, m, p))
+	{
+		xm += TS;
+		ym += ya;
+	}
+	dx = hypotf((float)(p->pos_x) - xm, (float)(p->pos_y) - ym);
+	bm = (int)(p->pos_y / TS + 1) * TS;
+	am = (bm - (p->pos_y - coef * p->pos_x)) / coef;
+	xa = TS / tanf(a / 180 * PI);
+	while (!is_wall(am, bm, m, p))
+	{
+		am += xa;
+		bm += TS;
+	}
+	dy = hypotf((float)(p->pos_x) - am, (float)(p->pos_y) - bm);
+	if (dx < dy)
+		return dx;
+	else
+		return dy;
+}
+
+float	jack1(float d, t_perso *p, t_map *m)
+{
+	float	xm;
+	float	ym;
+	float	coef;
+	float	xa;
+	float	ya;
+	float	dx;
+	float	dy;
+	float	a;
+	float	am;
+	float	bm;
+
+	coef = cosf(d / 180 * PI) / sinf(d / 180 * PI);
+	xm = (int)(p->pos_x / TS + 1) * TS;
+	ym = coef * xm + p->pos_y - coef * p->pos_x;
+	a = d - 90;
+	ya = TS * tanf(a / 180 * PI);
+	while (!is_wall(xm, ym, m, p))
+	{
+		xm += TS;
+		ym -= ya;
+	}
+	dx = hypotf((float)(p->pos_x) - xm, (float)(p->pos_y) - ym);
+	bm = (int)(p->pos_y / TS) * TS;
+	am = (bm - (p->pos_y - coef * p->pos_x)) / coef;
+	xa = TS / tanf(a / 180 * PI);
+	while (!is_wall(am, bm, m, p))
+	{
+		am += xa;
+		bm -= TS;
+	}
+	dy = hypotf((float)(p->pos_x) - am, (float)(p->pos_y) - bm);
+	if (dx < dy)
+		return dx;
+	else
+		return dy;
+}
+
+float	jack2(float d, t_perso *p, t_map *m)
+{
+	float	xm;
+	float	ym;
+	float	coef;
+	float	xa;
+	float	ya;
+	float	dx;
+	float	dy;
+	float	a;
+	float	am;
+	float	bm;
+
+	coef = cosf(d / 180 * PI) / sinf(d / 180 * PI);
+	xm = (int)(p->pos_x / TS) * TS;
+	ym = coef * xm + p->pos_y - coef * p->pos_x;
+	a = 270 - d;
+	ya = TS * tanf(a / 180 * PI);
+	while (!is_wall(xm, ym, m, p))
+	{
+		xm -= TS;
+		ym -= ya;
+	}
+	dx = hypotf((float)(p->pos_x) - xm, (float)(p->pos_y) - ym);
+	bm = (int)(p->pos_y / TS) * TS;
+	am = (bm - (p->pos_y - coef * p->pos_x)) / coef;
+	xa = TS / tanf(a / 180 * PI);
+	while (!is_wall(am, bm, m, p))
+	{
+		am -= xa;
+		bm -= TS;
+	}
+	dy = hypotf((float)(p->pos_x) - am, (float)(p->pos_y) - bm);
+	if (dx < dy)
+		return dx;
+	else
+		return dy;
+}
+
+float	jack3(float d, t_perso *p, t_map *m)
+{
+	float	xm;
+	float	ym;
+	float	coef;
+	float	xa;
+	float	ya;
+	float	dx;
+	float	dy;
+	float	a;
+	float	am;
+	float	bm;
+
+	coef = cosf(d / 180 * PI) / sinf(d / 180 * PI);
+	xm = (int)(p->pos_x / TS) * TS;
+	ym = coef * xm + p->pos_y - coef * p->pos_x;
+	a = d - 270;
+	ya = TS * tanf(a / 180 * PI);
+	while (!is_wall(xm, ym, m, p))
+	{
+		xm -= TS;
+		ym += ya;
+	}
+	dx = hypotf((float)(p->pos_x) - xm, (float)(p->pos_y) - ym);
+	bm = (int)(p->pos_y / TS + 1) * TS;
+	am = (bm - (p->pos_y - coef * p->pos_x)) / coef;
+	xa = TS / tanf(a / 180 * PI);
+	while (!is_wall(am, bm, m, p))
+	{
+		am -= xa;
+		bm += TS;
+	}
+	dy = hypotf((float)(p->pos_x) - am, (float)(p->pos_y) - bm);
+	if (dx < dy)
+		return dx;
+	else
+		return dy;
+}
+
 void	raycast2(float d, t_perso *p, t_map *m, t_column *c)
 {
 	float	dx;
@@ -121,7 +277,18 @@ void	raycast2(float d, t_perso *p, t_map *m, t_column *c)
 	int		t;
 
 	s = 1;
-	if (d == 0 || d == 180)
+	t = 1;
+	dy = -1;
+	dx = 0;
+	if (d < 90)
+		dx = jack0(d, p, m);
+	else if (d < 180)
+		dx = jack1(d, p, m);
+	else if (d < 270)
+		dx = jack2(d, p, m);
+	else
+		dx = jack3(d, p, m);
+	/*if (d == 0 || d == 180)
 		dx = -1;
 	else if (d < 180)
 	{
@@ -140,8 +307,8 @@ void	raycast2(float d, t_perso *p, t_map *m, t_column *c)
 	}
 	else
 		dy = findym(d, p, m);
-	c->face = (dx < dy && dx != -1) ? s : t;
-	printf("d = %f => dx = %f VS dy = %f\n", d, dx, dy);
+	c->face = (dx < dy && dx != -1) ? s : t;*/
+	c->face = 10;
 	if (dx == -1)
 		c->d_mur = dy;
 	else if (dy == -1)

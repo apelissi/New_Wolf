@@ -27,11 +27,11 @@ void	get_column(t_column *c, float x_touch, float y_touch)
 	if (fabs(y_touch - w_u) <= 1)
 		c->face = 0;
 	if (fabs(y_touch - w_d) <= 1)
-		c->face = (c->face == -1) ? 1 : c->old_face;
+		c->face = (c->face == -1) ? 1 : -1;
 	if (fabs(x_touch - w_r) <= 1)
-		c->face = (c->face == -1) ? 2 : c->old_face;
+		c->face = (c->face == -1) ? 2 : -1;
 	if (fabs(x_touch - w_l) <= 1)
-		c->face = (c->face == -1) ? 3 : c->old_face;
+		c->face = (c->face == -1) ? 3 : -1;
 	if (c->face == 0 && !(int)(y_touch / TS))
 		c->face = 1;
 	if (c->face == 3 && !(int)(x_touch / TS))
