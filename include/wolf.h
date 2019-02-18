@@ -6,7 +6,7 @@
 /*   By: apelissi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 17:27:55 by apelissi          #+#    #+#             */
-/*   Updated: 2019/02/12 13:08:48 by apelissi         ###   ########.fr       */
+/*   Updated: 2019/02/18 17:03:21 by apelissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ typedef struct		s_env{
 	int				p;
 	int				pm;
 }					t_env;
+
+typedef	struct		s_ray{
+	float			coef;
+	float			a;
+	float			dx;
+	float			dy;
+}					t_ray;
 
 int					ft_mlx(t_env *e);
 int					deal_key(int key, t_env *te);
