@@ -6,7 +6,7 @@
 /*   By: apelissi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 13:10:07 by apelissi          #+#    #+#             */
-/*   Updated: 2019/02/15 16:34:35 by apelissi         ###   ########.fr       */
+/*   Updated: 2019/02/20 17:11:58 by apelissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ void	point(int x, int y, t_map *m)
 
 int		ft_color(int num, int p)
 {
-	if (num == 0)
+	if (num == 10)
 		return (RED + p * 256);
 	else if (num == 1)
 		return (GREEN + p);
 	else if (num == 2)
 		return (YELLOW - p * 256);
 	else if (num == 3)
-		return (CYAN - p);
+		return (CYAN + p);
 	else if (num == -1)
 		return (BLACK + p + p * 256);
-	else if (num == 10)
-		return (PINK);
+	else if (num == 0)
+		return (PINK - p - p * 256 * 256);
 	return (G3 + p);
 }
 

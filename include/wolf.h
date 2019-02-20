@@ -6,7 +6,7 @@
 /*   By: apelissi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 17:27:55 by apelissi          #+#    #+#             */
-/*   Updated: 2019/02/18 17:03:21 by apelissi         ###   ########.fr       */
+/*   Updated: 2019/02/20 16:37:03 by apelissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct		s_column{
 	int				num;
 	int				face;
 	int				old_face;
+	float			xi;
+	float			yi;
 }					t_column;
 
 typedef	struct		s_perso{
@@ -75,9 +77,29 @@ typedef struct		s_env{
 typedef	struct		s_ray{
 	float			coef;
 	float			a;
+	float			dd;
 	float			dx;
 	float			dy;
+	int				cfxa;
+	int				cfxb;
+	int				cfxc;
+	int				cfxd;
+	int				cfya;
+	int				cfyb;
+	int				cfyc;
+	int				cfyd;
 }					t_ray;
+
+typedef	struct		s_dist{
+	float			xm;
+	float			ym;
+	float			ya;
+	int				tx;
+	float			am;
+	float			bm;
+	float			xa;
+	int				ty;
+}					t_dist;
 
 int					ft_mlx(t_env *e);
 int					deal_key(int key, t_env *te);
