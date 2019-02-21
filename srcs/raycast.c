@@ -6,7 +6,7 @@
 /*   By: apelissi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 13:06:27 by apelissi          #+#    #+#             */
-/*   Updated: 2019/02/20 17:08:57 by apelissi         ###   ########.fr       */
+/*   Updated: 2019/02/21 13:45:25 by apelissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	raycast2(float d, t_perso *p, t_map *m, t_column *c)
 {
 	t_ray	r;
 
+	d = (!d) ? 1 : d;
 	r.dd = d;
 	r.coef = cosf(d / 180 * PI) / sinf(d / 180 * PI);
 	r.a = (d < 180) ? 90 - d : 270 - d;

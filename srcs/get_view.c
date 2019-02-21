@@ -6,7 +6,7 @@
 /*   By: apelissi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 13:10:07 by apelissi          #+#    #+#             */
-/*   Updated: 2019/02/20 17:11:58 by apelissi         ###   ########.fr       */
+/*   Updated: 2019/02/21 16:46:27 by apelissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,42 +40,46 @@ int		ft_color(int num, int p)
 	return (G3 + p);
 }
 
-void	make_co(int h, int i, t_env *e, t_column c)
+int		truc(int z, int h, t_column c, t_env *e)
 {
-	int a;
-	int color;
+	float		nz;
+	float		nx;
+	float		ny;
 
-	a = 0;
-	i = e->win_x - i;
-	color = WHITE + e->p + e->p / 3 * 256 + e->p * 256 * 256;
-	while (a < e->win_y)
+	if (z >= (e->win_y + h) / 2)
+		return (G1);
+	else if (z <= (e->win_y - h) / 2)
+		return (G3);
+	else
 	{
-		if (a >= (e->win_y + h) / 2)
-			color = (e->p) ? e->p * (1 + 256 + 256 * 256) : G1;
-		e->data[i + e->win_x * a] =
-			(a > (e->win_y - h) / 2 && a < (e->win_y + h) / 2)
-			? ft_color(c.face, e->p) : color;
-		a++;
+		nz = (float)z - (((float)e->win_y - (float)h) / 2);
+		nz = nz * (TS / (float)h);
+		nx = (int)c.xi % TS;
+		ny = (int)c.yi % TS;
+		if (c.face == 0)
+			return (((int)nz % 25 < 2 || (int)nx % 25 <= 2) ? BLACK : RED);
+		else if (c.face == 1)
+			return ((int)(ny + nz));
+		else if (c.face == 2)
+			return ((((int)nx + (int)nz) % 10 < 5) ? PINK : YELLOW);
+		else if (c.face == 3)
+			return ((((int)ny % 10 < 5 && (int)nz % 10 < 5) ||
+					((int)ny % 10 >= 5 && (int)nz % 10 >= 5)) ? CYAN : WHITE);
 	}
+	return (0);
 }
 
-void	raycast(float d, t_perso *p, t_map *m, t_column *c)
+void	make_co2(int h, int i, t_env *e, t_column c)
 {
-	float	x_t;
-	float	y_t;
+	int	z;
 
-	x_t = p->pos_x;
-	y_t = p->pos_y;
-	while (x_t >= 0 && x_t < m->t_x * TS && y_t >= 0 && y_t < m->t_y * TS
-			&& (m->grid[(int)(y_t / TS)][(int)(x_t / TS)] != '1')
-			&& (m->grid[(int)(y_t / TS)][(int)(x_t / TS)] != '2'))
+	z = 0;
+	i = e->win_x - i;
+	while (z < e->win_y)
 	{
-		x_t = x_t + sinf(d / 180 * PI);
-		y_t = y_t + cosf(d / 180 * PI);
+		e->data[i + e->win_x * z] = truc(z, h, c, e);
+		z++;
 	}
-	if (m->pal)
-		get_column(c, x_t, y_t);
-	c->d_mur = hypotf((float)(p->pos_x) - x_t, (float)(p->pos_y) - y_t);
 }
 
 void	get_view(t_env *e)
@@ -93,15 +97,12 @@ void	get_view(t_env *e)
 		d = (float)e->pe->angle - 30 + (float)i * 60 / (float)e->win_x;
 		d = (d < 0) ? 360 + d : d;
 		d = (d >= 360) ? d - 360 : d;
-		if (d)
-			raycast2(d, e->pe, e->map, &c);
-		else
-			raycast(d, e->pe, e->map, &c);
+		raycast2(d, e->pe, e->map, &c);
 		d = (d > (float)e->pe->angle) ?
 			d - (float)e->pe->angle : (float)e->pe->angle - d;
 		c.d_mur = c.d_mur * cosf(d / 180 * PI);
 		h = (d_ecr * TS) / c.d_mur;
-		make_co((int)h, i, e, c);
+		make_co2((int)h, i, e, c);
 		i++;
 	}
 }

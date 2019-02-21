@@ -10,7 +10,6 @@ SRCNAMES =	expose_hook.c \
 						get_view.c \
 						key_hook.c \
 						main.c \
-						get_column.c \
 						utils.c\
 						raycast.c\
 
