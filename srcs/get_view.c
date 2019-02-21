@@ -6,7 +6,7 @@
 /*   By: apelissi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 13:10:07 by apelissi          #+#    #+#             */
-/*   Updated: 2019/02/21 16:46:27 by apelissi         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:02:13 by apelissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ int		truc(int z, int h, t_column c, t_env *e)
 		return (G3);
 	else
 	{
-		nz = (float)z - (((float)e->win_y - (float)h) / 2);
-		nz = nz * (TS / (float)h);
+		nz = ((float)z - (((float)e->win_y - (float)h) / 2)) * (TS / (float)h);
 		nx = (int)c.xi % TS;
 		ny = (int)c.yi % TS;
 		if (c.face == 0)
-			return (((int)nz % 25 < 2 || (int)nx % 25 <= 2) ? BLACK : RED);
+			return (((int)nz % 25 <= 0 || (int)nz % 25 >= 24 ||
+						(int)nx % 25 <= 0 || (int)nx % 25 >= 24) ? BLACK : RED);
 		else if (c.face == 1)
 			return ((int)(ny + nz));
 		else if (c.face == 2)
