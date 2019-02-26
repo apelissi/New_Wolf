@@ -29,7 +29,7 @@ int		get_color(char c, t_env *e, int i, int j)
 	else if (c == '3')
 		return (G3);
 	else
-		return (BLACK);
+		return (G4);
 }
 
 void	make_line(t_env *e)

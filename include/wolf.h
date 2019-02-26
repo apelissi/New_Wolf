@@ -32,14 +32,12 @@ typedef	struct		s_map{
 	int				t_y;
 	int				img_x;
 	int				img_y;
-	int				pal;
 }					t_map;
 
 typedef struct		s_column{
 	float			d_mur;
 	int				num;
 	int				face;
-	int				old_face;
 	float			xi;
 	float			yi;
 }					t_column;
@@ -49,11 +47,11 @@ typedef	struct		s_perso{
 	int				y_map;
 	int				pos_x;
 	int				pos_y;
-	int				pos_z;
 	int				mv_x;
 	int				mv_y;
 	int				mv_r;
 	int				angle;
+	int				pos_z;
 }					t_perso;
 
 typedef struct		s_env{
@@ -67,8 +65,6 @@ typedef struct		s_env{
 	int				win_x;
 	int				win_y;
 	void			*img;
-	int				x;
-	int				y;
 	int				psi;
 	int				p;
 	int				pm;
@@ -101,6 +97,13 @@ typedef	struct		s_dist{
 	int				ty;
 }					t_dist;
 
+typedef struct		s_render{
+	int				nx;
+	int				nz;
+	int				ny;
+	int				z;
+}					t_render;
+
 int					ft_mlx(t_env *e);
 int					deal_key(int key, t_env *te);
 int					get_map(t_map *map, int fd);
@@ -117,6 +120,6 @@ void				get_column(t_column *c, float x_touch, float y_touch);
 int					ft_exit(int i);
 int					ft_click_exit(void);
 void				ft_init_texture(t_env *e);
-void				raycast2(float d, t_perso *p, t_map *m, t_column *c);
+void				raycast(float d, t_perso *p, t_map *m, t_column *c);
 
 #		endif

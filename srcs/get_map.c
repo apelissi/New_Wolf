@@ -17,6 +17,8 @@ int	line_handler(t_map *map, char *line)
 	int	i;
 
 	i = 0;
+	if (!line)
+		return (0);
 	while (line[i] < '0' || line[i] > '9')
 		i++;
 	map->t_x = ft_atoi(&line[i]);
@@ -65,6 +67,8 @@ int	recup_grid(t_map *map, int fd)
 		if (!(map->grid[i] = (char *)malloc((map->t_x + 1) * sizeof(char))))
 			return (0);
 		if (read(fd, map->grid[i], map->t_x + 1) < map->t_x + 1)
+			return (0);
+		if (map->grid[i][map->t_x] != '\n')
 			return (0);
 		map->grid[i][map->t_x] = '\0';
 		i++;

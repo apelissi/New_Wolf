@@ -32,7 +32,8 @@ int		expose_hook(t_env *e)
 	get_perso(e, e->pe);
 	get_view(e);
 	mlx_put_image_to_window(e->ptr, e->win, e->img, 0, 0);
-	mlx_put_image_to_window(e->ptr, e->win, e->map->img_map, 0, 0);
+	if (e->pm)
+		mlx_put_image_to_window(e->ptr, e->win, e->map->img_map, 0, 0);
 	erase_player(e, e->pe->y_map, e->pe->x_map);
 	return (i);
 }

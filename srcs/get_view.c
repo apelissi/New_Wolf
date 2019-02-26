@@ -23,7 +23,7 @@ void	point(int x, int y, t_map *m)
 		m->data_map[x_m + y_m * m->img_x] = RED;
 }
 
-int		ft_color(int num, int p)
+int		co(int num, int p)
 {
 	if (num == 10)
 		return (RED + p * 256);
@@ -37,48 +37,48 @@ int		ft_color(int num, int p)
 		return (BLACK + p + p * 256);
 	else if (num == 0)
 		return (PINK - p - p * 256 * 256);
+	else if (num == 4)
+		return (WHITE + p * 65622);
 	return (G3 + p);
 }
 
-int		truc(int z, int h, t_column c, t_env *e)
+int		render(t_render r, int h, t_column c, t_env *e)
 {
-	float		nz;
-	float		nx;
-	float		ny;
-
-	if (z >= (e->win_y + h) / 2)
-		return (G1);
-	else if (z <= (e->win_y - h) / 2)
-		return (G3);
+	if (r.z >= (e->win_y + h) / 2)
+		return (G1 + e->p);
+	else if (r.z <= (e->win_y - h) / 2)
+		return (G3 + e->p);
 	else
 	{
-		nz = ((float)z - (((float)e->win_y - (float)h) / 2)) * (TS / (float)h);
-		nx = (int)c.xi % TS;
-		ny = (int)c.yi % TS;
 		if (c.face == 0)
-			return (((int)nz % 25 <= 0 || (int)nz % 25 >= 24 ||
-						(int)nx % 25 <= 0 || (int)nx % 25 >= 24) ? BLACK : RED);
+			return (((int)r.nz % 25 <= 0 || (int)r.nz % 25 >= 24 || (int)r.nx %
+			25 <= 0 || (int)r.nx % 25 >= 24) ? co(-1, e->p) : co(10, e->p));
 		else if (c.face == 1)
-			return ((int)(ny + nz));
+			return ((int)(r.ny + r.nz) + e->p);
 		else if (c.face == 2)
-			return ((((int)nx + (int)nz) % 10 < 5) ? PINK : YELLOW);
+			return ((((int)r.nx + (int)r.nz) % 10 < 5) ?
+			co(0, e->p) : co(2, e->p));
 		else if (c.face == 3)
-			return ((((int)ny % 10 < 5 && (int)nz % 10 < 5) ||
-					((int)ny % 10 >= 5 && (int)nz % 10 >= 5)) ? CYAN : WHITE);
+			return ((((int)r.ny % 10 < 5 && (int)r.nz % 10 < 5) || ((int)r.ny %
+			10 >= 5 && (int)r.nz % 10 >= 5)) ? co(3, e->p) : co(4, e->p));
 	}
 	return (0);
 }
 
-void	make_co2(int h, int i, t_env *e, t_column c)
+void	make_co(int h, int i, t_env *e, t_column c)
 {
-	int	z;
+	t_render r;
 
-	z = 0;
+	r.z = 0;
+	r.nx = (int)c.xi % TS;
+	r.ny = (int)c.yi % TS;
 	i = e->win_x - i;
-	while (z < e->win_y)
+	while (r.z < e->win_y)
 	{
-		e->data[i + e->win_x * z] = truc(z, h, c, e);
-		z++;
+		r.nz = ((float)r.z - (((float)e->win_y - (float)h) / 2))
+		* (TS / (float)h);
+		e->data[i + e->win_x * r.z] = render(r, h, c, e);
+		r.z++;
 	}
 }
 
@@ -97,12 +97,12 @@ void	get_view(t_env *e)
 		d = (float)e->pe->angle - 30 + (float)i * 60 / (float)e->win_x;
 		d = (d < 0) ? 360 + d : d;
 		d = (d >= 360) ? d - 360 : d;
-		raycast2(d, e->pe, e->map, &c);
+		raycast(d, e->pe, e->map, &c);
 		d = (d > (float)e->pe->angle) ?
 			d - (float)e->pe->angle : (float)e->pe->angle - d;
 		c.d_mur = c.d_mur * cosf(d / 180 * PI);
 		h = (d_ecr * TS) / c.d_mur;
-		make_co2((int)h, i, e, c);
+		make_co((int)h, i, e, c);
 		i++;
 	}
 }

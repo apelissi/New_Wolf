@@ -20,10 +20,10 @@ int	key_press(int k, t_env *e)
 	e->pe->mv_x = (k == A) ? 1 : e->pe->mv_x;
 	e->pe->mv_r = (k == RIGHT) ? -1 : e->pe->mv_r;
 	e->pe->mv_r = (k == LEFT) ? 1 : e->pe->mv_r;
+	if (k == M)
+		e->pm = (e->pm) ? 0 : 1;
 	if (k == R)
 		ft_clean(e);
-	if (k == C)
-		e->map->pal = (e->map->pal) ? 0 : 1;
 	if (k == P)
 	{
 		e->p = 0;

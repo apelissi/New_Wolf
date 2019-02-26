@@ -26,6 +26,7 @@ void	init(t_env *e)
 	e->pe->mv_r = 0;
 	e->psi = 0;
 	e->p = 0;
+	e->pm = 0;
 }
 
 int		ft_mlx(t_env *e)

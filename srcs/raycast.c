@@ -75,7 +75,7 @@ void	find_d(t_ray r, t_perso *p, t_map *m, t_column *c)
 	get_all(c, d, r);
 }
 
-void	raycast2(float d, t_perso *p, t_map *m, t_column *c)
+void	raycast(float d, t_perso *p, t_map *m, t_column *c)
 {
 	t_ray	r;
 
